@@ -1,36 +1,93 @@
-let httpGet = ({method = "", url = "", requestHeaders = {name: '', value: ''}, body = { }}) => {
-    let request = new XMLHttpRequest()
-    request.open(method.toUpperCase(), url)
-    if (method.toUpperCase() !== "GET") {
-        request.setRequestHeader(requestHeaders.name, requestHeaders.value)
-        request.send(JSON.stringify(body))
-    } else {
-        request.send()
-    }
-    return new Promise((resolve, reject) => {
-        request.onload = () => {
-            if (request.status < 200 || request.status > 299) {
-                return console.log('Some problem you status - ' + request.status)
-            }
-            resolve(request.response)
-        }
-        request.onerror = () => reject(`Error-status : ${request.status}`)
+console.log('Homework 39')
+const sumAllNumbers = (...rest) => {
+    if (rest.filter((a) => typeof (a) !== 'number').length >= 1) return `Error! You can use only numbers.`
+    return rest.reduce((result, value) => result += value, 0)
+}
 
+console.log(sumAllNumbers(1)) // 1
+console.log(sumAllNumbers(1, 2, 3)) // 6
+console.log(sumAllNumbers(1, 2, 3, 1, 2, 1, 10)) // 20
+console.log(sumAllNumbers(1, '2', 3)) // Error! You can use only numbers.
+console.log(sumAllNumbers([1, 2])) // Error! You can use only numbers.
+console.log(sumAllNumbers({number: 1})) // Error! You can use only numbers.
+console.log('End of homework 39')
+console.log('Homework 40')
+const userData = {
+    "id": 1,
+    "name": "Leanne Graham",
+    "username": "Bret",
+    "email": "Sincere@april.biz",
+    "address": {
+        "street": "Kulas Light",
+        "suite": "Apt. 556",
+        "city": "Gwenborough",
+        "zipcode": "92998-3874",
+        "geo": {
+            "lat": "-37.3159",
+            "lng": "81.1496"
+        }
+    },
+    "phone": "1-770-736-8031 x56442",
+    "website": "hildegard.org",
+    "company": {
+        "name": "Romaguera-Crona",
+        "catchPhrase": "Multi-layered client-server neural-net",
+        "bs": "harness real-time e-markets"
+    }
+};
+
+const renderUser = ({
+                        id,
+                        name,
+                        username,
+                        email,
+                        address: {street, suite, city, zipcode, geo: {lat, lng}},
+                        phone,
+                        website,
+                        company: {name: companyName, catchPhrase, bs}
+                    }) => {
+    let render = `
+        <div>
+            <h1>Homework 40</h1>
+            <p> <span>Users ID : ${id}   </span><span>   Name : ${name} ,  NickName : ${username}  </span></p>
+            <p>Email : ${email}, Phone number : ${phone}, Website : ${website}</p>
+            <p>Work in ${companyName}, Business structure : ${bs}, Catch Phrase : ${catchPhrase} </p> 
+            <p>Lives in : ${city}, ${street}, ${suite}, Zipcode : ${zipcode}  </p>
+            <p>Geolocation : lat :${lat} lng :${lng} </p>
+        </div> 
+   `
+    document.querySelector('.container').insertAdjacentHTML("afterbegin", render)
+}
+
+renderUser(userData);
+console.log('<===== ')
+console.log('End of homework 40');
+console.log('Homework 41');
+const myObjectAssign = (...rest) => {
+    return rest.reduce((result, el) => {
+        return result = Object.assign(result, el)
+    }, {})
+}
+
+console.log(myObjectAssign({a: 1})); // { a: 1 }
+console.log(myObjectAssign({a: 1}, {b: 2})); // { a: 1, b: 2 }
+console.log(myObjectAssign({a: 1, b: 2}, {b: 3}, {a: 4, c: 5})); // { a: 4, b: 3, c: 5 }
+console.log('End of homework 41');
+console.log('Homework 42');
+
+const delay = (time) => {
+    return new Promise((resolve, reject) => {
+        if (!time || typeof (time) !== 'number') return reject()
+        else return resolve(setTimeout(() => {
+            console.log(`Fire`)
+        }, time))
     })
 }
 
-httpGet({
-    method: "post",
-    url: "https://jsonplaceholder.typicode.com/posts",
-    requestHeaders: {
-        name: 'Content-type',
-        value: "application/json; charset=UTF-8",
-    },
-    body: {
-        title: 'dfghj',
-        body: 'jhjhjfkjf',
-        userId: '1',
-    },
-}).then((resolve) => JSON.parse(resolve)).then(result => console.log(result)).catch(reject => console.log(reject))
-
+delay(3000)
+    .then(() => console.log('Fire after 3 sec'))
+    .catch(() => console.log('Error!'));
+delay("o")
+    .then(() => console.log('Fire after 3 sec'))
+    .catch(() => console.log('Error!'));
 
