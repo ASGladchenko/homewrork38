@@ -1,7 +1,11 @@
 console.log('Homework 39')
 const sumAllNumbers = (...rest) => {
-    if (rest.filter((a) => typeof (a) !== 'number').length >= 1) return `Error! You can use only numbers.`
-    return rest.reduce((result, value) => result += value, 0)
+    let result = 0;
+    for (const restElement of rest) {
+        if (typeof (restElement) !== 'number') return `Error! You can use only numbers.`
+        result += restElement
+    }
+    return result
 }
 
 console.log(sumAllNumbers(1)) // 1
@@ -51,10 +55,10 @@ const renderUser = ({
             <h1>Homework 40</h1>
             <p> <span>Users ID : ${id}   </span><span>   Name : ${name} ,  NickName : ${username}  </span></p>
             <p>Email : ${email}, Phone number : ${phone}, Website : ${website}</p>
-            <p>Work in ${companyName}, Business structure : ${bs}, Catch Phrase : ${catchPhrase} </p> 
+            <p>Work in ${companyName}, Business structure : ${bs}, Catch Phrase : ${catchPhrase} </p>
             <p>Lives in : ${city}, ${street}, ${suite}, Zipcode : ${zipcode}  </p>
             <p>Geolocation : lat :${lat} lng :${lng} </p>
-        </div> 
+        </div>
    `
     document.querySelector('.container').insertAdjacentHTML("afterbegin", render)
 }
@@ -64,9 +68,14 @@ console.log('<===== ')
 console.log('End of homework 40');
 console.log('Homework 41');
 const myObjectAssign = (...rest) => {
-    return rest.reduce((result, el) => {
-        return result = Object.assign(result, el)
-    }, {})
+    let result ={}
+    rest.forEach((el) => {
+        result =({
+            ...result,
+            ...el,
+        })
+    })
+    return result
 }
 
 console.log(myObjectAssign({a: 1})); // { a: 1 }
