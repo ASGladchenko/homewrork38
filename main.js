@@ -1,14 +1,15 @@
-const myObjectAssign = (...rest) => {
-    let result ={}
-    rest.forEach((el) => {
-        result =({
-            ...result,
-            ...el,
-        })
+const delay = (time) => {
+    return new Promise((resolve, reject) => {
+        if (!time || typeof (time) !== 'number') return reject()
+        else return resolve(setTimeout(() => {
+            console.log(`Fire`)
+        }, time))
     })
-    return result
 }
 
-console.log(myObjectAssign({a: 1})); // { a: 1 }
-console.log(myObjectAssign({a: 1}, {b: 2})); // { a: 1, b: 2 }
-console.log(myObjectAssign({a: 1, b: 2}, {b: 3}, {a: 4, c: 5})); // { a: 4, b: 3, c: 5 }
+delay(3000)
+    .then(() => console.log('Fire after 3 sec'))
+    .catch(() => console.log('Error!'));
+delay("o")
+    .then(() => console.log('Fire after 3 sec'))
+    .catch(() => console.log('Error!'));
